@@ -20,7 +20,7 @@ public class Lecture {
     private String title;
     private String description;
     private String track;
-    private String startTime;//change to Date?
+    private String startTime;
     private String endTime;
     private Integer capacity;
 
