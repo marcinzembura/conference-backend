@@ -96,5 +96,3 @@ newEmail: (ciąg znaków) - nowy adres e-mail
 Przykładowe zapytanie:
 PUT http://localhost:8080/api/users/john123?newEmail=john123@example.com
 
-##Autor
-- Marcin Zembura
