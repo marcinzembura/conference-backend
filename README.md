@@ -68,6 +68,7 @@ Przykładowe zapytanie:
 GET http://localhost:8080/api/lectures/stats-interest
 
 Zestawienie ścieżek tematycznych wg zainteresowania:
+
 Metoda: GET
 Adres URL: http://localhost:8080/api/lectures/stats-track
 Przykładowe zapytanie:
