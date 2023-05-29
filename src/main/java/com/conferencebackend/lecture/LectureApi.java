@@ -35,4 +35,9 @@ public class LectureApi {
        return lectureService.getLectureInterestStats();
     }
 
+    @GetMapping("/stats-track")
+    public  Map<String, Double> getTrackInterestStats() {
+        return lectureService.getTrackInterestStats();
+    }
+
 }

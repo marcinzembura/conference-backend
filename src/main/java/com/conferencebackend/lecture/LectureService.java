@@ -58,8 +58,20 @@ public class LectureService {
             double interest = (totalReservations / (double) totalAllReservations) * 100;
             stats.put(lecture, interest);
         }
-
         return stats;
+    }
+
+    public Map<String, Double> getTrackInterestStats() {
+        List<Lecture> lectures = lectureRepository.findAll();
+        long countOfReservation = reservationRepository.count();
+        Map<String, Double> trackInterestMap = new LinkedHashMap<>();
+        for (Lecture lecture : lectures) {
+            String track = lecture.getTrack();
+            Long countOfTrack=reservationRepository.countReservationsByTrack(track);
+            double interest = (countOfTrack / (double) countOfReservation) * 100;
+            trackInterestMap.put(track, interest);
+        }
+        return trackInterestMap;
     }
 
     @EventListener(ApplicationReadyEvent.class)
