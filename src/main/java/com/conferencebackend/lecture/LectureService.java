@@ -1,7 +1,6 @@
 package com.conferencebackend.lecture;
 
 import com.conferencebackend.exception.LectureNotFoundException;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -48,6 +47,23 @@ public class LectureService {
         lectureRepository.deleteById(id);
     }
 
+    public void increaseLectureCapacity(Long lectureId) {
+        Lecture lecture = lectureRepository.findById(lectureId)
+                .orElseThrow(() -> new LectureNotFoundException(lectureId));
+
+        lecture.setCapacity(lecture.getCapacity() + 1);
+        lectureRepository.save(lecture);
+    }
+
+    public void decreaseLectureCapacity(Long lectureId) {
+        Lecture lecture = lectureRepository.findById(lectureId)
+                .orElseThrow(() -> new LectureNotFoundException(lectureId));
+
+        lecture.setCapacity(lecture.getCapacity() -1);
+        lectureRepository.save(lecture);
+    }
+
+
     @EventListener(ApplicationReadyEvent.class)
     private void initializeLectures() {
         List<Lecture> lectures = createSampleLectures();
@@ -70,92 +86,4 @@ public class LectureService {
         return lectures;
     }
 
-
 }
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//
-//@Service
-//public class LectureService {
-//
-//    private final LectureRepository lectureRepository;
-//
-//    @Autowired
-//    public LectureService(LectureRepository lectureRepository) {
-//        this.lectureRepository = lectureRepository;
-//    }
-//
-//    public List<Lecture> getAllLectures() {
-//        return lectureRepository.findAll();
-//    }
-//
-//    public Lecture getLectureById(Long id) {
-//        return lectureRepository.findById(id).orElse(null);
-//    }
-//
-//    public Lecture getLectureByTitle(String title) {
-//        return lectureRepository.findByTitle(title);
-//    }
-//
-//    public boolean isLectureAvailable(Long id) {
-//        Lecture lecture = lectureRepository.findByIdAndCapacityGreaterThan(id, 0);
-//        return lecture != null;
-//    }
-//
-//    public boolean isLoginAvailable(String login) {
-//        return !lectureRepository.existsByTitleAndIdNot(login, null);
-//    }
-//
-//    public void reserveLecture(Long id, String login, String email) throws LectureNotFoundException, LectureCapacityExceededException {
-//        Lecture lecture = lectureRepository.findByIdAndCapacityGreaterThan(id, 0);
-//        if (lecture == null) {
-//            throw new LectureNotFoundException("Lecture not found or no available seats");
-//        }
-//
-//        if (isLoginAvailable(login)) {
-//            lecture.setCapacity(lecture.getCapacity() - 1);
-//            lectureRepository.save(lecture);
-//            sendReservationNotification(login, email);
-//        } else {
-//            throw new LectureCapacityExceededException("Login already taken");
-//        }
-//    }
-//
-//    public void cancelLectureReservation(Long id, String login) throws LectureNotFoundException {
-//        Lecture lecture = lectureRepository.findById(id).orElseThrow(() -> new LectureNotFoundException("Lecture not found"));
-//        if (login.equals(lecture.getTitle())) {
-//            lecture.setCapacity(lecture.getCapacity() + 1);
-//            lectureRepository.save(lecture);
-//        }
-//    }
-//
-//    public void updateEmail(String login, String newEmail) throws LectureNotFoundException {
-//        Lecture lecture = lectureRepository.findByTitle(login);
-//        if (lecture != null) {
-//            lecture.setEmail(newEmail);
-//            lectureRepository.save(lecture);
-//        } else {
-//            throw new LectureNotFoundException("Lecture not found");
-//        }
-//    }
-//
-//    public List<User> getAllRegisteredUsers() {
-//        return lectureRepository.findAllUsers();
-//    }
-//
-//    public List<LectureStatistics> generateLectureStatistics() {
-//        return lectureRepository.getLectureStatistics();
-//    }
-//
-//    public List<TrackStatistics> generateTrackStatistics() {
-//        return lectureRepository.getTrackStatistics();
-//    }
-//
-//    private void sendReservationNotification(String login, String email) {
-//        // Metoda do wysyłania powiadomienia o rezerwacji
-//        // Implementacja zależy od wymagań aplikacji
-//    }
-//}
