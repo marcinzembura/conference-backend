@@ -1,5 +1,6 @@
 package com.conferencebackend.user;
 
+import com.conferencebackend.exception.LoginAlreadyTakenException;
 import com.conferencebackend.exception.UserNotFoundException;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -16,11 +17,15 @@ public class UserService {
     }
 
     public User getUserByLogin(String login) {
-        return userRepository.findByLogin(login);
+        try {
+            return userRepository.findByLogin(login);
+        }catch (UserNotFoundException exception){
+            return null;
+        }
     }
 
     public void updateUserEmail(String login, String newEmail) {
-        User user = userRepository.findByLogin(login);
+        User user = getUserByLogin(login);
         if (user == null) {
             throw new UserNotFoundException(login);
         }
@@ -32,18 +37,30 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User createUser(String login, String email) {
+        User existingUser = userRepository.findByLogin(login);
+        if (existingUser != null) {
+            if (!existingUser.getEmail().equals(email)) {
+                throw new LoginAlreadyTakenException(login);
+            }
+            return existingUser;
+        }
+        User newUser = new User(login, email);
+        return userRepository.save(newUser);
+    }
+
+
     @EventListener(ApplicationReadyEvent.class)
     public void addUsersToDataBase() {
-        User user1 = new User("john123","john@example.com");
-        User user2 = new User("emma456", "emma@example.com");
-        User user3 = new User("alex789", "alex@example.com");
-        User user4 = new User("sarah321", "sarah@example.com");
-        User user5 = new User("michael654",  "michael@example.com");
-
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
-        userRepository.save(user4);
-        userRepository.save(user5);
+        try {
+            createUser("john123", "john@example.com");
+            createUser("emma456", "emma@example.com");
+            createUser("alex789", "alex@example.com");
+            createUser("sarah321", "sarah@example.com");
+            createUser("michael654", "michael@example.com");
+            createUser("michael654", "michael@sa.com");
+        }catch (LoginAlreadyTakenException e){
+            System.out.println("Podany login jest już zajęty");
+        }
     }
 }
