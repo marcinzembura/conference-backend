@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,7 @@ public class ReservationApi {
     @DeleteMapping("/{reservationId}")
     public ResponseEntity<Void> cancelReservation(@PathVariable Long reservationId) {
         reservationService.cancelReservation(reservationId);
+
         return ResponseEntity.noContent().build();
     }
 
