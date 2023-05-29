@@ -10,7 +10,6 @@ import com.conferencebackend.user.User;
 import com.conferencebackend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -82,6 +81,5 @@ public class ReservationService {
             e.printStackTrace();
         }
     }
-
 
 }
