@@ -37,7 +37,6 @@ public class ReservationApi {
     @DeleteMapping("/{reservationId}")
     public ResponseEntity<Void> cancelReservation(@PathVariable Long reservationId) {
         reservationService.cancelReservation(reservationId);
-
         return ResponseEntity.noContent().build();
     }
 
