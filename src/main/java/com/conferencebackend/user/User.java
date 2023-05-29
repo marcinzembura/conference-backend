@@ -1,7 +1,6 @@
 package com.conferencebackend.user;
 
 
-import com.conferencebackend.lecture.Lecture;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
