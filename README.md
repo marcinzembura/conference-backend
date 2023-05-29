@@ -8,6 +8,7 @@
 ReservationApi:
 
 Tworzenie rezerwacji:
+
 Metoda: POST
 Adres URL: http://localhost:8080/api/reservations
 Parametry zapytania:
@@ -18,6 +19,7 @@ Przykładowe zapytanie:
 POST http://localhost:8080/api/reservations?login=john&email=john@example.com&lectureId=1
 
 Anulowanie rezerwacji:
+
 Metoda: DELETE
 Adres URL: http://localhost:8080/api/reservations/{reservationId}
 Parametr ścieżki:
@@ -26,12 +28,14 @@ Przykładowe zapytanie:
 DELETE http://localhost:8080/api/reservations/1
 
 Pobieranie wszystkich rezerwacji:
+
 Metoda: GET
 Adres URL: http://localhost:8080/api/reservations
 Przykładowe zapytanie:
 GET http://localhost:8080/api/reservations
 
 Pobieranie rezerwacji według loginu:
+
 Metoda: GET
 Adres URL: http://localhost:8080/api/reservations/{login}
 Parametr ścieżki:
@@ -48,6 +52,7 @@ Przykładowe zapytanie:
 GET http://localhost:8080/api/lectures
 
 Pobieranie wykładu po identyfikatorze:
+
 Metoda: GET
 Adres URL: http://localhost:8080/api/lectures/{id}
 Parametr ścieżki:
@@ -56,6 +61,7 @@ Przykładowe zapytanie:
 GET http://localhost:8080/api/lectures/1
 
 Zestawienie wykładów wg zainteresowania:
+
 Metoda: GET
 Adres URL: http://localhost:8080/api/lectures/stats-interest
 Przykładowe zapytanie:
@@ -70,6 +76,7 @@ Przykładowe zapytanie:
 GET http://localhost:8080/api/users
 
 Pobieranie użytkownika po loginie:
+
 Metoda: GET
 Adres URL: http://localhost:8080/api/users/{login}
 Parametr ścieżki:
@@ -78,6 +85,7 @@ Przykładowe zapytanie:
 GET http://localhost:8080/api/users/john123
 
 Aktualizowanie adresu e-mail użytkownika:
+
 Metoda: PUT
 Adres URL: http://localhost:8080/api/users/{login}
 Parametr ścieżki:
@@ -88,4 +96,4 @@ Przykładowe zapytanie:
 PUT http://localhost:8080/api/users/john123?newEmail=john123@example.com
 
 ##Autor
--Marcin Zembura
+- Marcin Zembura
