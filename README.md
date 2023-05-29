@@ -45,7 +45,7 @@ GET http://localhost:8080/api/reservations/john
 
 LectureApi:
 
-Pobieranie wszystkich wykładów:
+Plan konferencji:
 Metoda: GET
 Adres URL: http://localhost:8080/api/lectures
 Przykładowe zapytanie:
