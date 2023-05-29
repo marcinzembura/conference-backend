@@ -2,6 +2,7 @@ package com.conferencebackend.user;
 
 import com.conferencebackend.exception.LoginAlreadyTakenException;
 import com.conferencebackend.exception.UserNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -19,7 +21,7 @@ public class UserService {
     public User getUserByLogin(String login) {
         try {
             return userRepository.findByLogin(login);
-        }catch (UserNotFoundException exception){
+        } catch (UserNotFoundException exception) {
             return null;
         }
     }
@@ -40,7 +42,7 @@ public class UserService {
     public User createUser(String login, String email) {
         User existingUser = userRepository.findByLogin(login);
         if (existingUser != null) {
-            if (!existingUser.getEmail().equals(email)) {
+            if (! existingUser.getEmail().equals(email)) {
                 throw new LoginAlreadyTakenException(login);
             }
             return existingUser;
@@ -59,7 +61,7 @@ public class UserService {
             createUser("sarah321", "sarah@example.com");
             createUser("michael654", "michael@example.com");
             createUser("michael654", "michael@sa.com");
-        }catch (LoginAlreadyTakenException e){
+        } catch (LoginAlreadyTakenException e) {
             System.out.println("Podany login jest już zajęty");
         }
     }
