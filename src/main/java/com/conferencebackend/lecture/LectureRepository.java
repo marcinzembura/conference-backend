@@ -9,9 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
 
-    @Modifying
-    @Query("UPDATE Lecture l SET l.capacity = l.capacity - 1 WHERE l.id = :lectureId AND l.capacity > 0")
-    void decreaseCapacity(@Param("lectureId") Long lectureId);
-
-
 }

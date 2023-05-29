@@ -20,10 +20,6 @@ public class LectureService {
         this.lectureRepository = lectureRepository;
     }
 
-    public Lecture createLecture(Lecture lecture) {
-        return lectureRepository.save(lecture);
-    }
-
     public Lecture getLectureById(Long id) {
         Optional<Lecture> optionalLecture = lectureRepository.findById(id);
         return optionalLecture.orElseThrow(() -> new LectureNotFoundException(id));
@@ -31,20 +27,6 @@ public class LectureService {
 
     public List<Lecture> getAllLectures() {
         return lectureRepository.findAll();
-    }
-
-    public Lecture updateLecture(Lecture lecture) {
-        if (!lectureRepository.existsById(lecture.getId())) {
-            throw new LectureNotFoundException(lecture.getId());
-        }
-        return lectureRepository.save(lecture);
-    }
-
-    public void deleteLecture(Long id) {
-        if (!lectureRepository.existsById(id)) {
-            throw new LectureNotFoundException(id);
-        }
-        lectureRepository.deleteById(id);
     }
 
     public void increaseLectureCapacity(Long lectureId) {
