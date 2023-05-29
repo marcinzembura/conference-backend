@@ -1,11 +1,11 @@
 package com.conferencebackend.lecture;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/lectures")
@@ -28,6 +28,11 @@ public class LectureApi {
     public ResponseEntity<Lecture> getLectureById(@PathVariable Long id) {
         Lecture lecture = lectureService.getLectureById(id);
         return ResponseEntity.ok(lecture);
+    }
+
+    @GetMapping("/stats-interest")
+    public  Map<Lecture, Double> getLectureInterestStats() {
+       return lectureService.getLectureInterestStats();
     }
 
 }

@@ -1,23 +1,25 @@
 package com.conferencebackend.lecture;
 
 import com.conferencebackend.exception.LectureNotFoundException;
+import com.conferencebackend.reservation.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class LectureService {
 
     private final LectureRepository lectureRepository;
+    private final ReservationRepository reservationRepository;
 
     @Autowired
-    public LectureService(LectureRepository lectureRepository) {
+    public LectureService(LectureRepository lectureRepository,
+                          ReservationRepository reservationRepository) {
         this.lectureRepository = lectureRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public Lecture getLectureById(Long id) {
@@ -41,16 +43,31 @@ public class LectureService {
         Lecture lecture = lectureRepository.findById(lectureId)
                 .orElseThrow(() -> new LectureNotFoundException(lectureId));
 
-        lecture.setCapacity(lecture.getCapacity() -1);
+        lecture.setCapacity(lecture.getCapacity() - 1);
         lectureRepository.save(lecture);
     }
 
+
+    public Map<Lecture, Double> getLectureInterestStats() {
+        List<Lecture> lectures = lectureRepository.findAll();
+        Map<Lecture, Double> stats = new LinkedHashMap<>();
+        long totalAllReservations = reservationRepository.count();
+
+        for (Lecture lecture : lectures) {
+            int totalReservations = reservationRepository.countByLecture(lecture);
+            double interest = (totalReservations / (double) totalAllReservations) * 100;
+            stats.put(lecture, interest);
+        }
+
+        return stats;
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     private void initializeLectures() {
         List<Lecture> lectures = createSampleLectures();
         lectureRepository.saveAll(lectures);
     }
+
 
     private List<Lecture> createSampleLectures() {
         List<Lecture> lectures = new ArrayList<>();
@@ -67,5 +84,4 @@ public class LectureService {
 
         return lectures;
     }
-
 }
