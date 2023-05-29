@@ -13,8 +13,4 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllByUserLogin(String login);
 
     boolean existsByUserAndLectureStartTime(User user, String startTime);
-
-
-
-
 }
