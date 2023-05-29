@@ -62,6 +62,7 @@ Przykładowe zapytanie:
 GET http://localhost:8080/api/lectures/stats-interest
 
 UserApi:
+
 Pobieranie wszystkich użytkowników:
 Metoda: GET
 Adres URL: http://localhost:8080/api/users
