@@ -1,8 +1,3 @@
-##Instrukcja
-1. Nalezy sklonowac repozytorium.
-2. Należy sprawdzić konfiguracje z bazą danych.
-3. Następnie uruchomić aplikację - domyślnie nasłuchuje na porcie 8080.
-
 
 ##AdresyURL:
 
